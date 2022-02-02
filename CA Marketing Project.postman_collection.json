@@ -1,0 +1,746 @@
+{
+	"info": {
+		"_postman_id": "e3a8bc57-0ca0-4500-b271-1768b7ce3962",
+		"name": "CA Marketing Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Positive testing",
+			"item": [
+				{
+					"name": "Create new postal address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"pm.environment.set(\"ID\", jsonData.id);\r",
+									"\r",
+									"pm.test(\"ID is correct\", function () {\r",
+									"    pm.expect(jsonData.id).to.eql(pm.environment.get(\"ID\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(responseCode.code === 200) {\r",
+									"    tests[\"Backend is avaliable, response code is 200\"] = true;\r",
+									"} else if(responseCode.code === 400) {\r",
+									"    tests[\"Not authorized, check access token log in\"] = false;\r",
+									"} else if(responseCode.code === 403) {\r",
+									"    tests[\"Forbiden\"] = false;\r",
+									"} else if(responseCode.code === 404) {\r",
+									"    tests[\"Not found. Check if you made correct request\"] = false;\r",
+									"} else if(responseCode.code === 422) {\r",
+									"    tests[\"The instance is not valid\"] = false;\r",
+									"} else {\r",
+									"    tests[\"Something went wrong, check response body\"] = false;\r",
+									"}  \r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Header is correct\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json;charset=utf-8\");\r",
+									"    pm.response.to.have.header(\"Content-Length\", \"45\");\r",
+									"    pm.response.to.have.header(\"Connection\", \"keep-alive\");\r",
+									"    pm.response.to.have.header(\"Server\", \"Pepyaka/1.19.10\");\r",
+									"    pm.response.to.have.header(\"X-Content-Type-Options\", \"nosniff\"); \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body contains Id\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 200]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should be ok to process\", function () {\r",
+									"    pm.response.to.not.be.error;\r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.not.have.jsonBody('error');\r",
+									"});  "
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.unset(\"ID\");\r",
+									"pm.environment.unset(\"company\");\r",
+									"pm.environment.unset(\"url\");\r",
+									"\r",
+									"\r",
+									"// or \r",
+									"// pm.environment.clear();\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "0ho584DFJnZmXhp20_yYDCvGIMfiZTj0oK09YG2gyo4.eyJpbnN0YW5jZUlkIjoiZjQ2Y2Q1MDItZjcyZi00NGY3LTk2MzgtNWRhMWRlYjBiNGU3IiwiYXBwRGVmSWQiOiIxNTA1Yjc3NS1lODg1LWViMWItYjY2NS0xZTQ4NWQ5YmY5MGUiLCJtZXRhU2l0ZUlkIjoiMjhiNzkzZDYtNTQyNC00MDU4LTgwNDktMDI2YTRkYjAyODJmIiwic2lnbkRhdGUiOiIyMDIyLTAxLTEzVDE5OjUwOjMwLjgwMFoiLCJ1aWQiOiI1YmFlNGM1OS0wZDViLTQ4OTctYWQxOS04MTRhNDhjYTNmNDAiLCJkZW1vTW9kZSI6ZmFsc2UsImFpZCI6ImZiY2ZmMTFmLWM0MjYtNGRhZC05YmZiLWJiNGQzN2E0N2ZmMSIsImJpVG9rZW4iOiJkY2RiNDZkNC1hMzBiLTA0YWYtMTY3MS01ZmNiOTMwMDljYzgiLCJzaXRlT3duZXJJZCI6ImY5MTRmMTFjLWFhYjMtNDUyNy04ZDRlLWJhYjc2MjE0M2E2MCIsImV4cGlyYXRpb25EYXRlIjoiMjAyMi0wMS0xM1QyMzo1MDozMC44MDBaIiwiaGFzVXNlclJvbGUiOmZhbHNlfQ",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"address\": {\r\n        \"fullName\": {\r\n            \"firstName\": \"Lana \",\r\n            \"lastName\": \"Lang\"\r\n        },\r\n        \"company\": null,\r\n        \"taxInfo\": {\r\n            \"id\": null,\r\n            \"type\": null\r\n        },\r\n        \"addressLine1\": \"4849 Pearl Avenue\",\r\n        \"addressLine2\": null,\r\n        \"street\": {\r\n            \"name\": null,\r\n            \"number\": null\r\n        },\r\n        \"city\": \"San Jose\",\r\n        \"country\": \"USA\",\r\n        \"subdivision\": \"CA\",\r\n        \"zipCode\": \"95136\",\r\n        \"phoneNumber\": \"4567894545\",\r\n        \"location\": {\r\n            \"latitude\": 37.2613023,\r\n            \"longitude\": -121.8646767\r\n        }\r\n    },\r\n    \"setAsDefault\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://addresses.wixapps.net/_api/addresses-web/v1/addresses",
+							"protocol": "https",
+							"host": [
+								"addresses",
+								"wixapps",
+								"net"
+							],
+							"path": [
+								"_api",
+								"addresses-web",
+								"v1",
+								"addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show ALL postal addresses",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response contains correct ID\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(pm.environment.get(\"ID\"));\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(responseCode.code === 200) {\r",
+									"    tests[\"Backend is avaliable, response code is 200\"] = true;\r",
+									"} else if(responseCode.code === 400) {\r",
+									"    tests[\"Not authorized, check access token log in\"] = false;\r",
+									"} else if(responseCode.code === 403) {\r",
+									"    tests[\"Forbiden\"] = false;\r",
+									"} else if(responseCode.code === 404) {\r",
+									"    tests[\"Not found. Check if you made correct request\"] = false;\r",
+									"} else if(responseCode.code === 422) {\r",
+									"    tests[\"The instance is not valid\"] = false;\r",
+									"} else {\r",
+									"    tests[\"Something went wrong, check response body\"] = false;\r",
+									"}  \r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response size is less than 10KB\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(10240);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Header is correct\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json;charset=utf-8\");\r",
+									"    pm.response.to.have.header(\"Connection\", \"keep-alive\");\r",
+									"    pm.response.to.have.header(\"Server\", \"Pepyaka/1.19.10\");\r",
+									"    pm.response.to.have.header(\"X-Content-Type-Options\", \"nosniff\");  \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body contains correct values\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"fullName\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"firstName\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"lastName\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"country\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"subdivision\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"city\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"zipCode\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"company\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"addressLine1\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"location\");\r",
+									"});\r",
+									"\r",
+									"// pm.test(\"New ID is in response\", function () {\r",
+									"//     pm.expect(pm.response.text()).to.include({{\"df0c988b-6367-4f58-8324-c392812b2de0\")}};\r",
+									"// });\r",
+									"\r",
+									"// pm.test(\"Your test name\", function () {\r",
+									"//     var jsonData = pm.response.json();\r",
+									"//     pm.expect(jsonData.address.id).to.eql(pm.environment.get(\"ID\"));\r",
+									"// });\r",
+									"\r",
+									"pm.test(\"Entire response is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    // pm.expect(jsonData.address.id).to.eql(\"df0c988b-6367-4f58-8324-c392812b2de0\");\r",
+									"    pm.expect(jsonData.address.fullName.firstName).to.eql(\"Lana\");\r",
+									"    pm.expect(jsonData.address.fullName.lastName).to.eql(\"Lang\");\r",
+									"    pm.expect(jsonData.address.country).to.eql(\"USA\");\r",
+									"    pm.expect(jsonData.address.subdivision).to.eql(\"CA\");\r",
+									"    pm.expect(jsonData.address.city).to.eql(\"San Jose\");\r",
+									"    pm.expect(jsonData.address.zipCode).to.eql(\"95136\");\r",
+									"    pm.expect(jsonData.address.company).to.eql(\"North LLC\");\r",
+									"    pm.expect(jsonData.address.addressLine1).to.eql(\"4849 Pearl Avenue\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "0ho584DFJnZmXhp20_yYDCvGIMfiZTj0oK09YG2gyo4.eyJpbnN0YW5jZUlkIjoiZjQ2Y2Q1MDItZjcyZi00NGY3LTk2MzgtNWRhMWRlYjBiNGU3IiwiYXBwRGVmSWQiOiIxNTA1Yjc3NS1lODg1LWViMWItYjY2NS0xZTQ4NWQ5YmY5MGUiLCJtZXRhU2l0ZUlkIjoiMjhiNzkzZDYtNTQyNC00MDU4LTgwNDktMDI2YTRkYjAyODJmIiwic2lnbkRhdGUiOiIyMDIyLTAxLTEzVDE5OjUwOjMwLjgwMFoiLCJ1aWQiOiI1YmFlNGM1OS0wZDViLTQ4OTctYWQxOS04MTRhNDhjYTNmNDAiLCJkZW1vTW9kZSI6ZmFsc2UsImFpZCI6ImZiY2ZmMTFmLWM0MjYtNGRhZC05YmZiLWJiNGQzN2E0N2ZmMSIsImJpVG9rZW4iOiJkY2RiNDZkNC1hMzBiLTA0YWYtMTY3MS01ZmNiOTMwMDljYzgiLCJzaXRlT3duZXJJZCI6ImY5MTRmMTFjLWFhYjMtNDUyNy04ZDRlLWJhYjc2MjE0M2E2MCIsImV4cGlyYXRpb25EYXRlIjoiMjAyMi0wMS0xM1QyMzo1MDozMC44MDBaIiwiaGFzVXNlclJvbGUiOmZhbHNlfQ",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"address\": {\r\n        \"fullName\": {\r\n            \"firstName\": \"Lana \",\r\n            \"lastName\": \"Lang\"\r\n        },\r\n        \"company\": null,\r\n        \"taxInfo\": {\r\n            \"id\": null,\r\n            \"type\": null\r\n        },\r\n        \"addressLine1\": \"4849 Pearl Avenue\",\r\n        \"addressLine2\": null,\r\n        \"street\": {\r\n            \"name\": null,\r\n            \"number\": null\r\n        },\r\n        \"city\": \"San Jose\",\r\n        \"country\": \"USA\",\r\n        \"subdivision\": \"CA\",\r\n        \"zipCode\": \"95136\",\r\n        \"phoneNumber\": \"4567894545\",\r\n        \"location\": {\r\n            \"latitude\": 37.2613023,\r\n            \"longitude\": -121.8646767\r\n        }\r\n    },\r\n    \"setAsDefault\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://addresses.wixapps.net/_api/addresses-web/v1/addresses/{{ID}}",
+							"protocol": "https",
+							"host": [
+								"addresses",
+								"wixapps",
+								"net"
+							],
+							"path": [
+								"_api",
+								"addresses-web",
+								"v1",
+								"addresses",
+								"{{ID}}"
+							],
+							"query": [
+								{
+									"key": "ID",
+									"value": "{{ID}}",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update postal addresses Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Header is correct\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json;charset=utf-8\");\r",
+									"    pm.response.to.have.header(\"Connection\", \"keep-alive\");\r",
+									"    pm.response.to.have.header(\"Server\", \"Pepyaka/1.19.10\");\r",
+									"    pm.response.to.have.header(\"X-Content-Type-Options\", \"nosniff\"); \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should be ok to process\", function () {\r",
+									"    pm.response.to.not.be.error;\r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.not.have.jsonBody('error');\r",
+									"    pm.response.to.be.json;\r",
+									"    pm.response.to.not.have.jsonBody({});\r",
+									"}); \r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// pm.environment.set(\"company\", \"Google-\" + new Date().getTime());\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "2G3jqjTXtWeu0Key_zsp2drWiHRNsfgMBiCwDEDEmKU.eyJpbnN0YW5jZUlkIjoiZjQ2Y2Q1MDItZjcyZi00NGY3LTk2MzgtNWRhMWRlYjBiNGU3IiwiYXBwRGVmSWQiOiIxNTA1Yjc3NS1lODg1LWViMWItYjY2NS0xZTQ4NWQ5YmY5MGUiLCJtZXRhU2l0ZUlkIjoiMjhiNzkzZDYtNTQyNC00MDU4LTgwNDktMDI2YTRkYjAyODJmIiwic2lnbkRhdGUiOiIyMDIyLTAxLTEzVDIzOjIwOjMxLjU0NVoiLCJ1aWQiOiI1YmFlNGM1OS0wZDViLTQ4OTctYWQxOS04MTRhNDhjYTNmNDAiLCJkZW1vTW9kZSI6ZmFsc2UsImFpZCI6ImZiY2ZmMTFmLWM0MjYtNGRhZC05YmZiLWJiNGQzN2E0N2ZmMSIsImJpVG9rZW4iOiJkY2RiNDZkNC1hMzBiLTA0YWYtMTY3MS01ZmNiOTMwMDljYzgiLCJzaXRlT3duZXJJZCI6ImY5MTRmMTFjLWFhYjMtNDUyNy04ZDRlLWJhYjc2MjE0M2E2MCIsImV4cGlyYXRpb25EYXRlIjoiMjAyMi0wMS0xNFQwMzoyMDozMS41NDVaIiwiaGFzVXNlclJvbGUiOmZhbHNlfQ",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"address\": {\r\n        \"id\": \"2ba1c0f6-fa5e-4739-97f1-961591864bc3\",\r\n        \"fullName\": {\r\n            \"firstName\": \"Lana\",\r\n            \"lastName\": \"Lang\"\r\n        },\r\n        \"company\": \"North LLC\",\r\n        \"taxInfo\": {\r\n            \"id\": null,\r\n            \"type\": null\r\n        },\r\n        \"addressLine1\": \"4849 Pearl Avenue\",\r\n        \"addressLine2\": null,\r\n        \"street\": {\r\n            \"name\": null,\r\n            \"number\": null\r\n        },\r\n        \"city\": \"San Jose\",\r\n        \"country\": \"USA\",\r\n        \"subdivision\": \"CA\",\r\n        \"zipCode\": \"95136\",\r\n        \"phoneNumber\": \"4567894545\",\r\n        \"location\": {\r\n            \"latitude\": 37.2613023,\r\n            \"longitude\": -121.8646767\r\n        }\r\n    },\r\n    \"setAsDefault\": false,\r\n    \"fieldMask\": {\r\n        \"paths\": [\r\n            \"fullName.firstName\",\r\n            \"fullName.lastName\",\r\n            \"company\",\r\n            \"addressLine1\",\r\n            \"city\",\r\n            \"country\",\r\n            \"subdivision\",\r\n            \"zipCode\",\r\n            \"phoneNumber\",\r\n            \"location.latitude\",\r\n            \"location.longitude\",\r\n            \"setAsDefault\"\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://addresses.wixapps.net/_api/addresses-web/v1/addresses/{{ID}}",
+							"protocol": "https",
+							"host": [
+								"addresses",
+								"wixapps",
+								"net"
+							],
+							"path": [
+								"_api",
+								"addresses-web",
+								"v1",
+								"addresses",
+								"{{ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Updated addresses",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"ID is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.address.id).to.eql(pm.environment.get(\"ID\"));\r",
+									"});\r",
+									"\r",
+									"// pm.test(\"Company is correct\", function () {\r",
+									"//     var jsonData = pm.response.json();\r",
+									"//     pm.expect(jsonData.address.company).to.eql(pm.environment.get(\"company\"));\r",
+									"// });\r",
+									"\r",
+									"pm.test(\"Company is current\", function () {\r",
+									"    var jsonData = JSON.parse(responseBody);\r",
+									"    jsonData.company === (pm.environment.get(\"company\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(responseCode.code === 200) {\r",
+									"    tests[\"Backend is avaliable, response code is 200\"] = true;\r",
+									"} else if(responseCode.code === 400) {\r",
+									"    tests[\"Not authorized, check access token log in\"] = false;\r",
+									"} else if(responseCode.code === 403) {\r",
+									"    tests[\"Forbiden\"] = false;\r",
+									"} else if(responseCode.code === 404) {\r",
+									"    tests[\"Not found. Check if you made correct request\"] = false;\r",
+									"} else if(responseCode.code === 422) {\r",
+									"    tests[\"The instance is not valid\"] = false;\r",
+									"} else {\r",
+									"    tests[\"Something went wrong, check response body\"] = false;\r",
+									"}  \r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response size is less than 10KB\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(10240);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Header is correct\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json;charset=utf-8\");\r",
+									"    pm.response.to.have.header(\"Connection\", \"keep-alive\");\r",
+									"    pm.response.to.have.header(\"Server\", \"Pepyaka/1.19.10\");\r",
+									"    pm.response.to.have.header(\"X-Content-Type-Options\", \"nosniff\");  \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body contains correct values\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"fullName\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"firstName\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"lastName\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"country\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"subdivision\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"city\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"zipCode\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"company\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"addressLine1\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"location\");\r",
+									"});\r",
+									"\r",
+									"// pm.test(\"New ID is in response\", function () {\r",
+									"//     pm.expect(pm.response.text()).to.include(\"33179a7b-d1b0-4ee3-a969-f4bff7854795\");\r",
+									"// });\r",
+									"\r",
+									"pm.test(\"Entire response is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    // pm.expect(jsonData.address.id).to.eql(\"33179a7b-d1b0-4ee3-a969-f4bff7854795\");\r",
+									"    pm.expect(jsonData.address.fullName.firstName).to.eql(\"Lana\");\r",
+									"    pm.expect(jsonData.address.country).to.eql(\"USA\");\r",
+									"    pm.expect(jsonData.address.subdivision).to.eql(\"CA\");\r",
+									"    pm.expect(jsonData.address.city).to.eql(\"San Jose\");\r",
+									"    // pm.expect(jsonData.address.zipCode).to.eql(\"95126\");\r",
+									"    // // pm.expect(jsonData.address.company).to.eql(\"Finland LLC\");\r",
+									"    // pm.expect(jsonData.address.addressLine1).to.eql(\"789 Villa Avenue\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.address).to.be.a('object');\r",
+									"    pm.expect(jsonData.address.id).to.be.a('string');\r",
+									"    pm.expect(jsonData.address.fullName).to.be.a('object');\r",
+									"    pm.expect(jsonData.address.fullName.firstName).to.be.a('string');\r",
+									"    pm.expect(jsonData.address.fullName.lastName).to.be.a('string');\r",
+									"    pm.expect(jsonData.address.subdivision).to.be.a('string');\r",
+									"    pm.expect(jsonData.address.country).to.be.a('string');\r",
+									"    pm.expect(jsonData.address.zipCode).to.be.a('string');\r",
+									"    pm.expect(jsonData.address.addressLine1).to.be.a('string');\r",
+									"    pm.expect(jsonData.address.company).to.be.a('string');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "0ho584DFJnZmXhp20_yYDCvGIMfiZTj0oK09YG2gyo4.eyJpbnN0YW5jZUlkIjoiZjQ2Y2Q1MDItZjcyZi00NGY3LTk2MzgtNWRhMWRlYjBiNGU3IiwiYXBwRGVmSWQiOiIxNTA1Yjc3NS1lODg1LWViMWItYjY2NS0xZTQ4NWQ5YmY5MGUiLCJtZXRhU2l0ZUlkIjoiMjhiNzkzZDYtNTQyNC00MDU4LTgwNDktMDI2YTRkYjAyODJmIiwic2lnbkRhdGUiOiIyMDIyLTAxLTEzVDE5OjUwOjMwLjgwMFoiLCJ1aWQiOiI1YmFlNGM1OS0wZDViLTQ4OTctYWQxOS04MTRhNDhjYTNmNDAiLCJkZW1vTW9kZSI6ZmFsc2UsImFpZCI6ImZiY2ZmMTFmLWM0MjYtNGRhZC05YmZiLWJiNGQzN2E0N2ZmMSIsImJpVG9rZW4iOiJkY2RiNDZkNC1hMzBiLTA0YWYtMTY3MS01ZmNiOTMwMDljYzgiLCJzaXRlT3duZXJJZCI6ImY5MTRmMTFjLWFhYjMtNDUyNy04ZDRlLWJhYjc2MjE0M2E2MCIsImV4cGlyYXRpb25EYXRlIjoiMjAyMi0wMS0xM1QyMzo1MDozMC44MDBaIiwiaGFzVXNlclJvbGUiOmZhbHNlfQ",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"address\": {\r\n        \"id\": \"c74d50e2-08fc-44b0-bb2c-fa8d6b6d72ee\",\r\n        \"fullName\": {\r\n            \"firstName\": \"Lana\",\r\n            \"lastName\": \"Lang\"\r\n        },\r\n        \"company\": \"{{company}}\",\r\n        \"taxInfo\": {\r\n            \"id\": null,\r\n            \"type\": null\r\n        },\r\n        \"addressLine1\": \"462 Martin Avenue\",\r\n        \"addressLine2\": null,\r\n        \"street\": {\r\n            \"name\": null,\r\n            \"number\": null\r\n        },\r\n        \"city\": \"Santa Clara\",\r\n        \"country\": \"USA\",\r\n        \"subdivision\": \"CA\",\r\n        \"zipCode\": \"95050\",\r\n        \"phoneNumber\": \"4567892356\",\r\n        \"location\": {\r\n            \"latitude\": 37.36610599999999,\r\n            \"longitude\": -121.94254\r\n        }\r\n    },\r\n    \"setAsDefault\": false,\r\n    \"fieldMask\": {\r\n        \"paths\": [\r\n            \"fullName.firstName\",\r\n            \"fullName.lastName\",\r\n            \"company\",\r\n            \"addressLine1\",\r\n            \"city\",\r\n            \"country\",\r\n            \"subdivision\",\r\n            \"zipCode\",\r\n            \"phoneNumber\",\r\n            \"location.latitude\",\r\n            \"location.longitude\",\r\n            \"setAsDefault\"\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://addresses.wixapps.net/_api/addresses-web/v1/addresses/{{ID}}",
+							"protocol": "https",
+							"host": [
+								"addresses",
+								"wixapps",
+								"net"
+							],
+							"path": [
+								"_api",
+								"addresses-web",
+								"v1",
+								"addresses",
+								"{{ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete postal address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if(responseCode.code === 200) {\r",
+									"    tests[\"Backend is avaliable, response code is 200\"] = true;\r",
+									"} else if(responseCode.code === 400) {\r",
+									"    tests[\"Not authorized, check access token log in\"] = false;\r",
+									"} else if(responseCode.code === 403) {\r",
+									"    tests[\"Forbiden\"] = false;\r",
+									"} else if(responseCode.code === 404) {\r",
+									"    tests[\"Not found. Check if you made correct request\"] = false;\r",
+									"} else if(responseCode.code === 422) {\r",
+									"    tests[\"The instance is not valid\"] = false;\r",
+									"} else {\r",
+									"    tests[\"Something went wrong, check response body\"] = false;\r",
+									"}  \r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Header is correct\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json;charset=utf-8\");\r",
+									"    pm.response.to.have.header(\"Connection\", \"keep-alive\");\r",
+									"    pm.response.to.have.header(\"Server\", \"Pepyaka/1.19.10\");\r",
+									"    pm.response.to.have.header(\"X-Content-Type-Options\", \"nosniff\"); \r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 200]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should be ok to process\", function () {\r",
+									"    pm.response.to.not.be.error;\r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.not.have.jsonBody('error');\r",
+									"});  "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "rxOVcGsoQGckb6usKvHy2Zz3TYikAot3ywALBTwZFKI.eyJpbnN0YW5jZUlkIjoiZjQ2Y2Q1MDItZjcyZi00NGY3LTk2MzgtNWRhMWRlYjBiNGU3IiwiYXBwRGVmSWQiOiIxNTA1Yjc3NS1lODg1LWViMWItYjY2NS0xZTQ4NWQ5YmY5MGUiLCJtZXRhU2l0ZUlkIjoiMjhiNzkzZDYtNTQyNC00MDU4LTgwNDktMDI2YTRkYjAyODJmIiwic2lnbkRhdGUiOiIyMDIyLTAxLTA3VDIzOjQ1OjI0LjkzMloiLCJ1aWQiOiI1YmFlNGM1OS0wZDViLTQ4OTctYWQxOS04MTRhNDhjYTNmNDAiLCJkZW1vTW9kZSI6ZmFsc2UsImFpZCI6ImZiY2ZmMTFmLWM0MjYtNGRhZC05YmZiLWJiNGQzN2E0N2ZmMSIsImJpVG9rZW4iOiJkY2RiNDZkNC1hMzBiLTA0YWYtMTY3MS01ZmNiOTMwMDljYzgiLCJzaXRlT3duZXJJZCI6ImY5MTRmMTFjLWFhYjMtNDUyNy04ZDRlLWJhYjc2MjE0M2E2MCIsImV4cGlyYXRpb25EYXRlIjoiMjAyMi0wMS0wOFQwMzo0NToyNC45MzJaIiwiaGFzVXNlclJvbGUiOmZhbHNlfQ",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"address\": {\r\n        \"id\": \"287ef1a8-e8b7-4289-80af-80e14ba16a4c\",\r\n        \"fullName\": {\r\n            \"firstName\": \"Lana\",\r\n            \"lastName\": \"Lee\"\r\n        },\r\n        \"country\": \"USA\",\r\n        \"subdivision\": \"CA\",\r\n        \"city\": \"San Jose\",\r\n        \"zipCode\": \"95126\",\r\n        \"phoneNumber\": \"6547897889\",\r\n        \"company\": \"Google-1642801155525\",\r\n        \"addressLine1\": \"789 Villa Avenue\",\r\n        \"location\": {\r\n            \"latitude\": 37.33910150000001,\r\n            \"longitude\": -121.9138017\r\n        }\r\n    },\r\n    \"isDefaultAddress\": false",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://addresses.wixapps.net/_api/addresses-web/v1/addresses/{{ID}}",
+							"protocol": "https",
+							"host": [
+								"addresses",
+								"wixapps",
+								"net"
+							],
+							"path": [
+								"_api",
+								"addresses-web",
+								"v1",
+								"addresses",
+								"{{ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Updated deleted addresses",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Message is include previously deleted ID\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"message\", pm.environment.get(\"ID\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message details ID is correct\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(pm.response.details.cant_find).to.eql(\"address_id: \" +  pm.environment.get(\"ID\"));\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"// pm.test(\"Status code is 200\", function () {\r",
+									"//     pm.response.to.have.status(400);\r",
+									"// });\r",
+									"\r",
+									"// if(responseCode.code === 200) {\r",
+									"//     tests[\"Backend is avaliable, response code is 200\"] = false;\r",
+									"// } else if(responseCode.code === 400) {\r",
+									"//     tests[\"Bad request 400 is OK\"] = true;\r",
+									"// } else if(responseCode.code === 403) {\r",
+									"//     tests[\"Forbiden\"] = false;\r",
+									"// } else if(responseCode.code === 404) {\r",
+									"//     tests[\"Not found. Check if you made correct request\"] = false;\r",
+									"// } else if(responseCode.code === 422) {\r",
+									"//     tests[\"The instance is not valid\"] = false;\r",
+									"// } else {\r",
+									"//     tests[\"Something went wrong, check response body\"] = false;\r",
+									"// }  \r",
+									"\r",
+									"// pm.test(\"Response time is less than 500ms\", function () {\r",
+									"//     pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"// });\r",
+									"\r",
+									"// pm.test(\"Response size is less than 10KB\", function () {\r",
+									"//     pm.expect(pm.response.responseTime).to.be.below(10240);\r",
+									"// });\r",
+									"\r",
+									"// pm.test(\"Header is correct\", function () {\r",
+									"//     pm.response.to.have.header(\"Content-Type\", \"application/json;charset=utf-8\");\r",
+									"//     pm.response.to.have.header(\"Connection\", \"keep-alive\");\r",
+									"//     pm.response.to.have.header(\"Server\", \"Pepyaka/1.19.10\");\r",
+									"//     pm.response.to.have.header(\"X-Content-Type-Options\", \"nosniff\");  \r",
+									"// });\r",
+									"\r",
+									"\r",
+									"// pm.test(\"Can't find is expected\", function () {\r",
+									"//     pm.expect(pm.response.text()).to.include(\"cant_find\",\"address_id df0c988b-6367-4f58-8324-c392812b2de0\");\r",
+									"// });\r",
+									"\r",
+									"\r",
+									"// pm.test(\"Response body should be in the correct format\", function () {\r",
+									"//     var jsonData = JSON.parse(responseBody);\r",
+									"//     jsonData.cant_find === (\"address_id: df0c988b-6367-4f58-8324-c392812b2de0\")\r",
+									"// });\r",
+									"\r",
+									"// pm.test(\"Your test name\", function () {\r",
+									"//     var jsonData = pm.response.json();\r",
+									"//     pm.expect(jsonData.details.cant_find).to.eql(\"address_id: df0c988b-6367-4f58-8324-c392812b2de0\");\r",
+									"// });\r",
+									"\r",
+									"// pm.test(\"Response should be ok to process\", function () {\r",
+									"//     pm.response.to.be.error;\r",
+									"//     pm.response.to.be.withBody;\r",
+									"//     pm.response.to.not.have.jsonBody('error');\r",
+									"//     pm.response.to.be.json;\r",
+									"// }); \r",
+									"\r",
+									"// pm.test(\"Response body should be in the correct format\", function () {\r",
+									"//     let jsonResponse = pm.response.json();\r",
+									"//     pm.expect(jsonResponse.message).to.be.a(\"string\");\r",
+									"//     pm.expect(jsonResponse.details).to.be.a(\"object\");\r",
+									"//     pm.expect(jsonResponse.details.cant_find).to.be.a(\"string\");\r",
+									"// }); "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "0ho584DFJnZmXhp20_yYDCvGIMfiZTj0oK09YG2gyo4.eyJpbnN0YW5jZUlkIjoiZjQ2Y2Q1MDItZjcyZi00NGY3LTk2MzgtNWRhMWRlYjBiNGU3IiwiYXBwRGVmSWQiOiIxNTA1Yjc3NS1lODg1LWViMWItYjY2NS0xZTQ4NWQ5YmY5MGUiLCJtZXRhU2l0ZUlkIjoiMjhiNzkzZDYtNTQyNC00MDU4LTgwNDktMDI2YTRkYjAyODJmIiwic2lnbkRhdGUiOiIyMDIyLTAxLTEzVDE5OjUwOjMwLjgwMFoiLCJ1aWQiOiI1YmFlNGM1OS0wZDViLTQ4OTctYWQxOS04MTRhNDhjYTNmNDAiLCJkZW1vTW9kZSI6ZmFsc2UsImFpZCI6ImZiY2ZmMTFmLWM0MjYtNGRhZC05YmZiLWJiNGQzN2E0N2ZmMSIsImJpVG9rZW4iOiJkY2RiNDZkNC1hMzBiLTA0YWYtMTY3MS01ZmNiOTMwMDljYzgiLCJzaXRlT3duZXJJZCI6ImY5MTRmMTFjLWFhYjMtNDUyNy04ZDRlLWJhYjc2MjE0M2E2MCIsImV4cGlyYXRpb25EYXRlIjoiMjAyMi0wMS0xM1QyMzo1MDozMC44MDBaIiwiaGFzVXNlclJvbGUiOmZhbHNlfQ",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"address\": {\r\n        \"fullName\": {\r\n            \"firstName\": \"Sara\",\r\n            \"lastName\": \"Lee\"\r\n        },\r\n        \"company\": \"Finand\",\r\n        \"taxInfo\": {\r\n            \"id\": null,\r\n            \"type\": null\r\n        },\r\n        \"addressLine1\": \"567 Cinnabar Street\",\r\n        \"addressLine2\": null,\r\n        \"street\": {\r\n            \"name\": null,\r\n            \"number\": null\r\n        },\r\n        \"city\": \"San Jose\",\r\n        \"country\": \"USA\",\r\n        \"subdivision\": \"CA\",\r\n        \"zipCode\": \"95110\",\r\n        \"phoneNumber\": null,\r\n        \"location\": {\r\n            \"latitude\": 37.3371619,\r\n            \"longitude\": -121.9061522\r\n        }\r\n    },\r\n    \"setAsDefault\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://addresses.wixapps.net/_api/addresses-web/v1/addresses/{{ID}}",
+							"protocol": "https",
+							"host": [
+								"addresses",
+								"wixapps",
+								"net"
+							],
+							"path": [
+								"_api",
+								"addresses-web",
+								"v1",
+								"addresses",
+								"{{ID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "Qg4J-ZEEld6uCmtw38UglMBYyH6z6lWewGuiG1I3wqw.eyJpbnN0YW5jZUlkIjoiZjQ2Y2Q1MDItZjcyZi00NGY3LTk2MzgtNWRhMWRlYjBiNGU3IiwiYXBwRGVmSWQiOiIxNTA1Yjc3NS1lODg1LWViMWItYjY2NS0xZTQ4NWQ5YmY5MGUiLCJtZXRhU2l0ZUlkIjoiMjhiNzkzZDYtNTQyNC00MDU4LTgwNDktMDI2YTRkYjAyODJmIiwic2lnbkRhdGUiOiIyMDIyLTAxLTMxVDAzOjEyOjIyLjQ3NloiLCJ1aWQiOiI1YmFlNGM1OS0wZDViLTQ4OTctYWQxOS04MTRhNDhjYTNmNDAiLCJkZW1vTW9kZSI6ZmFsc2UsImFpZCI6ImZiY2ZmMTFmLWM0MjYtNGRhZC05YmZiLWJiNGQzN2E0N2ZmMSIsImJpVG9rZW4iOiJkY2RiNDZkNC1hMzBiLTA0YWYtMTY3MS01ZmNiOTMwMDljYzgiLCJzaXRlT3duZXJJZCI6ImY5MTRmMTFjLWFhYjMtNDUyNy04ZDRlLWJhYjc2MjE0M2E2MCIsImV4cGlyYXRpb25EYXRlIjoiMjAyMi0wMS0zMVQwNzoxMjoyMi40NzZaIiwiaGFzVXNlclJvbGUiOmZhbHNlfQ",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "Authorization",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

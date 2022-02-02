@@ -1,0 +1,147 @@
+{
+  "id": "cfe49294-ed30-412e-b733-2fcb866ce669",
+  "version": "2.0",
+  "name": "California Real Estate",
+  "url": "https://qasvus.wordpress.com",
+  "tests": [{
+    "id": "13156a9d-3daa-4b12-9de2-67f68e93f48d",
+    "name": "California Marketing",
+    "commands": [{
+      "id": "544b2271-3745-4ca4-a9f2-f7f6c151edac",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "53e5dc4d-d99b-4041-897f-13f26b2a0b4e",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x832",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ae5ce010-9c80-453d-a474-4a96b776de37",
+      "comment": "",
+      "command": "click",
+      "target": "id=g2-name",
+      "targets": [
+        ["id=g2-name", "id"],
+        ["name=g2-name", "name"],
+        ["css=#g2-name", "css:finder"],
+        ["xpath=//input[@id='g2-name']", "xpath:attributes"],
+        ["xpath=//div[@id='contact-form-2']/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f7691b6a-bc97-42be-aaeb-745ef98358c9",
+      "comment": "",
+      "command": "type",
+      "target": "id=g2-name",
+      "targets": [
+        ["id=g2-name", "id"],
+        ["name=g2-name", "name"],
+        ["css=#g2-name", "css:finder"],
+        ["xpath=//input[@id='g2-name']", "xpath:attributes"],
+        ["xpath=//div[@id='contact-form-2']/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Katia"
+    }, {
+      "id": "ba43f094-963a-4e28-9c62-e97a4ee9505a",
+      "comment": "",
+      "command": "click",
+      "target": "id=g2-email",
+      "targets": [
+        ["id=g2-email", "id"],
+        ["name=g2-email", "name"],
+        ["css=#g2-email", "css:finder"],
+        ["xpath=//input[@id='g2-email']", "xpath:attributes"],
+        ["xpath=//div[@id='contact-form-2']/form/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "82e3d8c0-e69a-41bc-810d-c031b46f7abb",
+      "comment": "",
+      "command": "type",
+      "target": "id=g2-email",
+      "targets": [
+        ["id=g2-email", "id"],
+        ["name=g2-email", "name"],
+        ["css=#g2-email", "css:finder"],
+        ["xpath=//input[@id='g2-email']", "xpath:attributes"],
+        ["xpath=//div[@id='contact-form-2']/form/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Katiakatia123@gmail.com"
+    }, {
+      "id": "c3b200ea-83a8-40eb-8095-b5d4982090cb",
+      "comment": "",
+      "command": "click",
+      "target": "id=contact-form-comment-g2-message",
+      "targets": [
+        ["id=contact-form-comment-g2-message", "id"],
+        ["name=g2-message", "name"],
+        ["css=#contact-form-comment-g2-message", "css:finder"],
+        ["xpath=//textarea[@id='contact-form-comment-g2-message']", "xpath:attributes"],
+        ["xpath=//div[@id='contact-form-2']/form/div[3]/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "eb8887d9-acac-47f7-90dd-cfde5984449b",
+      "comment": "",
+      "command": "type",
+      "target": "id=contact-form-comment-g2-message",
+      "targets": [
+        ["id=contact-form-comment-g2-message", "id"],
+        ["name=g2-message", "name"],
+        ["css=#contact-form-comment-g2-message", "css:finder"],
+        ["xpath=//textarea[@id='contact-form-comment-g2-message']", "xpath:attributes"],
+        ["xpath=//div[@id='contact-form-2']/form/div[3]/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "Hello"
+    }, {
+      "id": "9aa1d20b-644d-4e5a-b34e-63757d4e0d72",
+      "comment": "",
+      "command": "click",
+      "target": "css=.pushbutton-wide",
+      "targets": [
+        ["css=.pushbutton-wide", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='contact-form-2']/form/p/button", "xpath:idRelative"],
+        ["xpath=//p/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "befaeb1f-8607-45ae-99f9-d222f07369b3",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=go back",
+      "targets": [
+        ["linkText=go back", "linkText"],
+        ["css=h3 > a", "css:finder"],
+        ["xpath=//a[contains(text(),'go back')]", "xpath:link"],
+        ["xpath=//div[@id='contact-form-2']/h3/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/?contact-form-hash=870c9c4c3793ec33a9fbd94db1a03cdcd56c1036')]", "xpath:href"],
+        ["xpath=//h3/a", "xpath:position"],
+        ["xpath=//a[contains(.,'go back')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "fa27483f-4f6d-4d37-a97e-af582801b382",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["13156a9d-3daa-4b12-9de2-67f68e93f48d"]
+  }],
+  "urls": ["https://qasvus.wordpress.com/"],
+  "plugins": []
+}
